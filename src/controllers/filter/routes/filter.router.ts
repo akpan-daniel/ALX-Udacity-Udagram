@@ -26,9 +26,9 @@ router.get("/", async (req: Request, res: Response) => {
       //    4. deletes any files on the server on finish of the response
       deleteLocalFiles([image]);
     });
-  } catch (err: any) {
-    console.log(err.message);
-    return res.status(422).send(err.message);
+  } catch (err) {
+    console.log((err as Error).message);
+    return res.status(422).send((err as Error).message);
   }
 });
 
