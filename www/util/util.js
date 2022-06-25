@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
+const axios_1 = __importDefault(require("axios"));
 const Jimp = require("jimp");
 // filterImageFromURL
 // helper function to download, filter, and save the filtered image locally
@@ -24,7 +25,8 @@ function filterImageFromURL(inputURL) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const photo = yield Jimp.read(inputURL);
+                const response = yield axios_1.default.get(inputURL, { responseType: "arraybuffer" });
+                const photo = yield Jimp.read(response.data);
                 const outpath = "/tmp/filtered." + Math.floor(Math.random() * 2000) + ".jpg";
                 yield photo
                     .resize(256, 256) // resize
